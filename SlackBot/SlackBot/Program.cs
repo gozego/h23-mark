@@ -1,3 +1,4 @@
+using SlackBot.Command;
 using SlackBot.Event;
 using SlackNet.AspNetCore;
 using SlackNet.Blocks;
@@ -8,10 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 var slackSettings = builder.Configuration.GetSection("Slack").Get<SlackSettings>();
+builder.Services.Configure<JiraSettings>(builder.Configuration.GetSection("Jira"));
 builder.Services.AddSlackNet(c =>
 {
     c.UseApiToken(slackSettings?.ApiToken);
     c.UseAppLevelToken(slackSettings?.AppLevelToken);
+
+    c.RegisterEventHandler<MessageEvent, JiraHandler>();
 
     c.RegisterEventHandler<MessageEvent, PingDemo>();
 
@@ -61,4 +65,12 @@ internal record SlackSettings
     public string ApiToken { get; init; } = string.Empty;
     public string AppLevelToken { get; init; } = string.Empty;
     public string SigningSecret { get; init; } = string.Empty;
+}
+
+public record JiraSettings
+{
+    public string ApiToken { get; init; } = string.Empty;
+    public string Username { get; init; } = string.Empty;
+    public string Login { get; init; } = string.Empty;
+    public string Url { get; init; } = string.Empty;
 }

@@ -1,3 +1,4 @@
+using SlackBot.Command;
 using SlackNet;
 using SlackNet.Blocks;
 using SlackNet.Events;
@@ -28,7 +29,7 @@ public class AppHome : IEventHandler<AppHomeOpened>
                 {
                     new SectionBlock
                     {
-                        Text = new Markdown($@"Welcome to the SlackNet example. Here's what you can do:
+                        Text = new Markdown($@"Hello from Slackbot. Here's what you can do:
 • Say ""{PingDemo.Trigger}"" to get back a pong
 • Say ""{CounterDemo.Trigger}"" to get the counter demo
 • Say ""{ModalViewDemo.Trigger}"" to open then modal view demo

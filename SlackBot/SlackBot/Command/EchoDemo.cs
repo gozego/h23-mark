@@ -1,7 +1,7 @@
 using SlackNet.Interaction;
 using SlackNet.WebApi;
 
-namespace SlackBot.Event;
+namespace SlackBot.Command;
 
 /// <summary>
 ///     A slash command handler that just echos back whatever you sent it
