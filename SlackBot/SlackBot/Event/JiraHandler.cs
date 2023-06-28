@@ -165,11 +165,11 @@ public class JiraHandler : IEventHandler<MessageEvent>, IBlockActionHandler<Butt
         _log.LogInformation("Received jira search command from {User} in the {Channel} channel",
             (await _slack.Users.Info(slackEvent.User)).Name,
             (await _slack.Conversations.Info(slackEvent.Channel)).Name);
-        await _slack.Chat.PostMessage(new Message
+        await _slack.Chat.ScheduleMessage(new Message
         {
             Text = "pong",
             Channel = slackEvent.Channel,
-        });
+        }, DateTime.Now.AddSeconds(15));
     }
 
     private async Task HandleAutoLog(MessageEvent slackEvent, List<string>? input)
