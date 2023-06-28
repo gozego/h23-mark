@@ -16,6 +16,8 @@ builder.Services.AddSlackNet(c =>
     c.UseAppLevelToken(slackSettings?.AppLevelToken);
 
     c.RegisterEventHandler<MessageEvent, JiraHandler>();
+    c.RegisterBlockActionHandler<ButtonAction, JiraHandler>(JiraHandler.OpenModal);
+    c.RegisterViewSubmissionHandler<JiraHandler>(JiraHandler.ModalCallbackId);
 
     c.RegisterEventHandler<MessageEvent, PingDemo>();
 
@@ -70,7 +72,6 @@ internal record SlackSettings
 public record JiraSettings
 {
     public string ApiToken { get; init; } = string.Empty;
-    public string Username { get; init; } = string.Empty;
     public string Login { get; init; } = string.Empty;
     public string Url { get; init; } = string.Empty;
 }
